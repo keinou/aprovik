@@ -1,4 +1,5 @@
-import 'package:aprovik/liberacao.mode.dart';
+import 'package:aprovik/config.page.dart';
+import 'package:aprovik/liberacao.model.dart';
 import 'package:flutter/material.dart';
 
 class HomePage extends StatefulWidget {
@@ -110,7 +111,9 @@ class _HomePageState extends State<HomePage> {
                       iconSize: 40,
                       color: Colors.grey,
                       onPressed: () {
-                        print("foi pra config");
+                        Navigator.of(context).push(MaterialPageRoute(
+                          builder: (context) => ConfigPage(),
+                        ));
                       },
                       icon: Icon(Icons.settings)),
                 )

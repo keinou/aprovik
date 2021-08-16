@@ -7,15 +7,16 @@ class Liberac {
   String solicitante;
   String data;
   String hora;
+  List<ItLiberac> itens;
 
-  Liberac({
-    this.status,
-    this.titulo,
-    this.descricao,
-    this.solicitante,
-    this.data,
-    this.hora,
-  });
+  Liberac(
+      {this.status,
+      this.titulo,
+      this.descricao,
+      this.solicitante,
+      this.data,
+      this.hora,
+      this.itens});
 
   Color getColorStatus() {
     if (status == 1) {
@@ -23,4 +24,11 @@ class Liberac {
     }
     return Colors.red;
   }
+}
+
+class ItLiberac {
+  String descricao;
+  bool hValue;
+  int quantidade;
+  double valor;
 }
