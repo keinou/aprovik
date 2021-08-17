@@ -22,6 +22,12 @@ class Liberac {
     if (status == 1) {
       return Colors.blue;
     }
+    if (status == 2) {
+      return Colors.amber;
+    }
+    if (status == 3) {
+      return Colors.green;
+    }
     return Colors.red;
   }
 }

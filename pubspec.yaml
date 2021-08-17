@@ -16,8 +16,9 @@ dependencies:
   # UI
   cupertino_icons: ^1.0.2
   blobs: ^2.0.0
-  flutter_login: ^2.2.1
+  flutter_custom_clippers: ^2.0.0
 
+  flutter_login: ^2.2.1
   #
   hive: ^2.0.4
 

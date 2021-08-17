@@ -4,7 +4,7 @@ import 'package:flutter_login/flutter_login.dart';
 
 const users = const {
   'rkarczevski@gmail.com': '12345',
-  'hunter@gmail.com': 'hunter',
+  '1@1.com': '123',
 };
 
 class LoginScreen extends StatelessWidget {
