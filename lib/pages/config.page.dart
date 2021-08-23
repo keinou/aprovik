@@ -1,5 +1,6 @@
+import 'package:appwrite/appwrite.dart';
+import 'package:aprovik/constants.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_custom_clippers/flutter_custom_clippers.dart';
 
 class ConfigPage extends StatefulWidget {
   ConfigPage({Key key}) : super(key: key);
@@ -11,22 +12,15 @@ class ConfigPage extends StatefulWidget {
 class _ConfigPageState extends State<ConfigPage> {
   String authMeth;
   double height = 218;
+
+  TextEditingController eCnome = TextEditingController();
+  TextEditingController eCempresa = TextEditingController();
+  TextEditingController eCendPoint = TextEditingController();
+
   @override
   void initState() {
     super.initState();
   }
-
-  /*
-  token : 265
-  Sem Auth : 218
-  Basic : 325
-
-  IconButton(
-              onPressed: () {
-                Navigator.of(context).pop();
-              },
-              icon: Icon(Icons.arrow_back)),
-  */
 
   @override
   Widget build(BuildContext context) {
@@ -34,15 +28,6 @@ class _ConfigPageState extends State<ConfigPage> {
         body: SafeArea(
       child: Stack(
         children: [
-          /*Container(
-            width: MediaQuery.of(context).size.width,
-            height: MediaQuery.of(context).size.height * 0.35,
-            decoration: BoxDecoration(
-                color: Color(0xFF247BA0),
-                borderRadius: BorderRadius.only(
-                    bottomLeft: Radius.circular(50),
-                    bottomRight: Radius.circular(50))),
-          ),*/
           ClipPath(
             clipper: WaveClipper(),
             child: Container(
@@ -82,10 +67,22 @@ class _ConfigPageState extends State<ConfigPage> {
                             mainAxisAlignment: MainAxisAlignment.start,
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              Text(
+                              Container(
+                                width:
+                                    (MediaQuery.of(context).size.width * 0.75) -
+                                        70 -
+                                        45,
+                                child: TextFormField(
+                                  controller: eCnome,
+                                  decoration: InputDecoration(
+                                      border: UnderlineInputBorder(),
+                                      labelText: 'Nome'),
+                                ),
+                              ),
+                              /*Text(
                                 "Rafael Karczevski",
                                 style: TextStyle(fontSize: 21),
-                              ),
+                              ),*/
                               Text(
                                 "rkarczevski@gmail.com",
                                 style: TextStyle(fontSize: 11),
@@ -108,11 +105,13 @@ class _ConfigPageState extends State<ConfigPage> {
                     child: ListView(
                       children: [
                         TextFormField(
+                          controller: eCempresa,
                           decoration: InputDecoration(
                               border: UnderlineInputBorder(),
                               labelText: 'Nome da Empresa'),
                         ),
                         TextFormField(
+                          controller: eCendPoint,
                           decoration: InputDecoration(
                               border: UnderlineInputBorder(),
                               labelText: 'URL para requisições'),
@@ -187,19 +186,34 @@ class _ConfigPageState extends State<ConfigPage> {
                     ),
                   ),
                 ),
-                Card(
-                  margin: EdgeInsets.only(bottom: 15),
-                  elevation: 15,
-                  child: Container(
-                    padding: const EdgeInsets.all(15),
-                    width: MediaQuery.of(context).size.width * 0.75,
-                    height: 70,
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Icon(Icons.save),
-                        Text("Salvar"),
-                      ],
+                GestureDetector(
+                  onTap: () {
+                    Account ac = Account(Constants.cl);
+                    Map<dynamic, dynamic> prefs = {
+                      "empresa": "nome da empresa",
+                      "endPoint": "url",
+                      "auth": "none",
+                      "bearer": "token",
+                      "basicUser": "user",
+                      "basicPass": "Pass"
+                    };
+                    ac.updatePrefs(prefs: prefs);
+                    ac.updateName(name: "name");
+                  },
+                  child: Card(
+                    margin: EdgeInsets.only(bottom: 15),
+                    elevation: 15,
+                    child: Container(
+                      padding: const EdgeInsets.all(15),
+                      width: MediaQuery.of(context).size.width * 0.75,
+                      height: 70,
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Icon(Icons.save),
+                          Text("Salvar"),
+                        ],
+                      ),
                     ),
                   ),
                 ),

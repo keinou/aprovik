@@ -1,5 +1,7 @@
-import 'package:aprovik/config.page.dart';
-import 'package:aprovik/liberacao.model.dart';
+import 'package:appwrite/appwrite.dart';
+import 'package:aprovik/constants.dart';
+import 'package:aprovik/pages/config.page.dart';
+import 'package:aprovik/model/liberacao.model.dart';
 import 'package:flutter/material.dart';
 
 class HomePage extends StatefulWidget {
@@ -13,49 +15,6 @@ class _HomePageState extends State<HomePage> {
   List<Liberac> liberacoes = [];
   @override
   void initState() {
-    liberacoes.add(Liberac(
-        titulo: "Pedido 1",
-        descricao: "Pedido 1, Cliente H, Alinhamento com X",
-        solicitante: "Rafael Karczevski",
-        status: 1,
-        data: "10/08/2021",
-        hora: "15:21"));
-    liberacoes.add(Liberac(
-        titulo: "Pedido 45",
-        descricao: "Pedido 45, conforme proposta UYYY",
-        solicitante: "XH da Y",
-        status: 1,
-        data: "11/08/2021",
-        hora: "16:47"));
-    liberacoes.add(Liberac(
-        titulo: "Contrato 4877",
-        descricao: "Contrato 4877 fornecedor JU",
-        solicitante: "Rafael Karczevski",
-        status: 2,
-        data: "27/03/2021",
-        hora: "16:47"));
-    liberacoes.add(Liberac(
-        titulo: "Contrato 4754",
-        descricao: "Contrato 4754, contrato e proposta alinhados xxxx",
-        solicitante: "Pedinte",
-        status: 2,
-        data: "29/03/2021",
-        hora: "18:10"));
-    liberacoes.add(Liberac(
-        titulo: "Proposta 5",
-        descricao: "Proposta 5, bloqueio por valor",
-        solicitante: "Pedinte",
-        status: 3,
-        data: "29/03/2021",
-        hora: "18:10"));
-    liberacoes.add(Liberac(
-        titulo: "Proposta 8",
-        descricao: "Proposta 8, bloqueio por serasa",
-        solicitante: "Pedinte",
-        status: 3,
-        data: "29/03/2021",
-        hora: "18:10"));
-
     super.initState();
   }
 
@@ -92,14 +51,16 @@ class _HomePageState extends State<HomePage> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        "Rafael Karczevski",
+                        Constants.usr.name,
                         style: TextStyle(fontSize: 21),
                       ),
-                      Text(
-                        "rkarczevski@gmail.com",
-                        style: TextStyle(fontSize: 11),
-                      ),
-                      Text("Nome da Empresa")
+                      Constants.usr.name == Constants.usr.email
+                          ? Container()
+                          : Text(
+                              Constants.usr.email,
+                              style: TextStyle(fontSize: 11),
+                            ),
+                      Text("Empresa")
                     ],
                   ),
                   Expanded(
