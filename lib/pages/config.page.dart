@@ -1,5 +1,7 @@
 import 'package:appwrite/appwrite.dart';
 import 'package:aprovik/constants.dart';
+import 'package:aprovik/controller/user.controller.dart';
+import 'package:aprovik/pages/login.page.dart';
 import 'package:flutter/material.dart';
 
 class ConfigPage extends StatefulWidget {
@@ -13,9 +15,12 @@ class _ConfigPageState extends State<ConfigPage> {
   String authMeth;
   double height = 218;
 
-  TextEditingController eCnome = TextEditingController();
-  TextEditingController eCempresa = TextEditingController();
-  TextEditingController eCendPoint = TextEditingController();
+  TextEditingController eCnome =
+      TextEditingController(text: Constants.usr.name);
+  TextEditingController eCempresa =
+      TextEditingController(text: Constants.usr.prefs.empresa);
+  TextEditingController eCendPoint =
+      TextEditingController(text: Constants.usr.prefs.endPoint);
 
   @override
   void initState() {
@@ -187,18 +192,19 @@ class _ConfigPageState extends State<ConfigPage> {
                   ),
                 ),
                 GestureDetector(
-                  onTap: () {
+                  onTap: () async {
                     Account ac = Account(Constants.cl);
                     Map<dynamic, dynamic> prefs = {
-                      "empresa": "nome da empresa",
-                      "endPoint": "url",
+                      "empresa": eCempresa.text,
+                      "endPoint": eCendPoint.text,
                       "auth": "none",
                       "bearer": "token",
                       "basicUser": "user",
                       "basicPass": "Pass"
                     };
-                    ac.updatePrefs(prefs: prefs);
-                    ac.updateName(name: "name");
+                    await ac.updatePrefs(prefs: prefs);
+                    await ac.updateName(name: eCnome.text);
+                    await UserController.getUser();
                   },
                   child: Card(
                     margin: EdgeInsets.only(bottom: 15),
@@ -217,22 +223,31 @@ class _ConfigPageState extends State<ConfigPage> {
                     ),
                   ),
                 ),
-                Card(
-                  margin: EdgeInsets.only(bottom: 15),
-                  elevation: 15,
-                  child: Container(
-                    padding: const EdgeInsets.all(15),
-                    width: MediaQuery.of(context).size.width * 0.75,
-                    height: 70,
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Icon(Icons.exit_to_app),
-                        Text("Sair da Conta"),
-                      ],
+                GestureDetector(
+                  onTap: () async {
+                    Account ac = Account(Constants.cl);
+                    await ac.deleteSessions();
+                    Navigator.of(context).pushReplacement(MaterialPageRoute(
+                      builder: (context) => LoginScreen(),
+                    ));
+                  },
+                  child: Card(
+                    margin: EdgeInsets.only(bottom: 15),
+                    elevation: 15,
+                    child: Container(
+                      padding: const EdgeInsets.all(15),
+                      width: MediaQuery.of(context).size.width * 0.75,
+                      height: 70,
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Icon(Icons.exit_to_app),
+                          Text("Sair da Conta"),
+                        ],
+                      ),
                     ),
                   ),
-                ),
+                )
               ],
             ),
           ))

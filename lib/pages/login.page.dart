@@ -1,5 +1,6 @@
 import 'package:appwrite/appwrite.dart';
 import 'package:aprovik/constants.dart';
+import 'package:aprovik/controller/user.controller.dart';
 import 'package:aprovik/model/user.model.dart';
 import 'package:aprovik/pages/home.page.dart';
 import 'package:flutter/material.dart';
@@ -12,8 +13,10 @@ class LoginScreen extends StatelessWidget {
     Account account = Account(Constants.cl);
 
     try {
-      Response login = await account.createSession(
-          email: data.name, password: data.password);
+      await account.deleteSessions();
+    } catch (e) {}
+    try {
+      await account.createSession(email: data.name, password: data.password);
 
       Response user = await account.get();
       Constants.usr = User.fromJson(user.data);
@@ -28,6 +31,19 @@ class LoginScreen extends StatelessWidget {
     try {
       Response user = await account.create(
           email: data.name, password: data.password, name: data.name);
+      Account ac = Account(Constants.cl);
+      await ac.createSession(email: data.name, password: data.password);
+      Map<dynamic, dynamic> prefs = {
+        "empresa": "Empresa",
+        "endPoint": "",
+        "auth": "none",
+        "bearer": "",
+        "basicUser": "",
+        "basicPass": ""
+      };
+      await ac.updatePrefs(prefs: prefs);
+      await ac.createVerification(url: "https://132.145.96.217/");
+      await UserController.getUser();
       return null;
     } catch (e) {
       return e.message;

@@ -60,7 +60,7 @@ class _HomePageState extends State<HomePage> {
                               Constants.usr.email,
                               style: TextStyle(fontSize: 11),
                             ),
-                      Text("Empresa")
+                      Text(Constants.usr.prefs.empresa)
                     ],
                   ),
                   Expanded(
